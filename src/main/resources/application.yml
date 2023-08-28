@@ -1,12 +1,25 @@
 spring:
+  security:
+    oauth2:
+      resource-server:
+        jwt:
+          issuer-uri: http://localhost:9000
   cloud:
     gateway:
       routes:
-        - id: spring-6-rest-mvc
+        - id: spring6-rest-mvc
           uri: http://localhost:8081
           predicates:
             - Path=/api/v1/*
-            - #      httpserver:
+        - id: spring6-reactive
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/v2/*
+        - id: spring6-reactive-mongo
+          uri: http://localhost:8083
+          predicates:
+            - Path=/api/v3/*
+              #      httpserver:
               #        wiretap: true
               #      httpclient:
               #        wiretap: true
@@ -15,4 +28,4 @@ spring:
               #    root: error
               #    reactor.netty: trace
               #    org.springframework.cloud.gateway: trace
-            #    org.springframework.http.server.reactive: trace
+              #    org.springframework.http.server.reactive: trace
